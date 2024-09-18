@@ -7,23 +7,20 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Pixabay Image Search</h1>
-    </header>
+    <form class="form" id="search-form">
+      <input type="text" name="query" placeholder="Search images..." />
+      <button type="submit">Search</button>
+    </form>
 
-    <main>
-      <form id="search-form">
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search images..."
-          required
-        />
-        <button type="submit">Search</button>
-      </form>
-
-      <section class="gallery"></section>
-    </main>
+    <div id="gallery" class="gallery"></div>
+    <button id="load-more" style="display: none">Load more</button>
+    <div id="loader" class="loader" style="display: none">
+      <div class="loader-inner ball-pulse">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
 
     <script type="module" src="./main.js"></script>
   </body>
