@@ -3,24 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home work 11</title>
+    <title>Image Gallery</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
+    <div id="loader" class="loader"></div>
     <form class="form" id="search-form">
       <input type="text" name="query" placeholder="Search images..." />
       <button type="submit">Search</button>
     </form>
-
     <div id="gallery" class="gallery"></div>
-    <button id="load-more" style="display: none">Load more</button>
-    <div id="loader" class="loader" style="display: none">
-      <div class="loader-inner ball-pulse">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
+    <button id="load-more" style="display: none">Load More</button>
 
     <script type="module" src="./main.js"></script>
   </body>

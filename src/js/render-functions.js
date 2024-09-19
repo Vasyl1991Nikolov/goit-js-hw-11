@@ -12,10 +12,18 @@ export function renderImages(images, container) {
             </div>
         </div>
     `).join('');
-    
+
     container.innerHTML += markup;
 }
 
 export function clearGallery(container) {
     container.innerHTML = '';
+}
+
+export function showLoader() {
+    document.getElementById('loader').style.display = 'flex'; // Показуємо індикатор завантаження
+}
+
+export function hideLoader() {
+    document.getElementById('loader').style.display = 'none'; // Приховуємо індикатор завантаження
 }

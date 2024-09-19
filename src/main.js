@@ -1,5 +1,5 @@
 import { fetchImages } from './js/pixabay-api.js';
-import { renderImages, clearGallery } from './js/render-functions.js';
+import { renderImages, clearGallery, showLoader, hideLoader } from './js/render-functions.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
@@ -13,7 +13,7 @@ const loadMoreBtn = document.querySelector('#load-more');
 let currentPage = 1;
 let currentQuery = '';
 
-const lightbox = new SimpleLightbox('.gallery a'); // Ініціалізація lightbox
+const lightbox = new SimpleLightbox('.gallery a'); // Ініціалізація SimpleLightbox
 
 searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -29,7 +29,9 @@ searchForm.addEventListener('submit', async (event) => {
 
     currentQuery = query;
     currentPage = 1;
-    clearGallery(galleryContainer);
+    clearGallery(galleryContainer); // Очищуємо попередні результати
+
+    showLoader(); // Показуємо індикатор завантаження
 
     try {
         const images = await fetchImages(query, currentPage);
@@ -39,33 +41,46 @@ searchForm.addEventListener('submit', async (event) => {
                 title: 'No results',
                 message: 'Sorry, there are no images matching your search query. Please try again!',
             });
+            hideLoader(); // Приховуємо індикатор завантаження
             return;
         }
 
-        renderImages(images, galleryContainer);
-        lightbox.refresh(); // Оновлюємо lightbox після додавання нових зображень
-        loadMoreBtn.style.display = 'block';
+        renderImages(images, galleryContainer); // Відображаємо результати
+        lightbox.refresh(); // Оновлюємо SimpleLightbox після рендерингу зображень
+        loadMoreBtn.style.display = 'block'; // Показуємо кнопку "Завантажити більше"
     } catch (error) {
         iziToast.error({
             title: 'Error',
             message: 'Something went wrong while fetching images.',
         });
         console.error('Error:', error);
+    } finally {
+        hideLoader(); // Приховуємо індикатор завантаження
     }
 });
 
 loadMoreBtn.addEventListener('click', async () => {
     currentPage += 1;
 
+    showLoader(); // Показуємо індикатор завантаження
+
     try {
         const images = await fetchImages(currentQuery, currentPage);
         renderImages(images, galleryContainer);
-        lightbox.refresh(); // Оновлюємо lightbox після додавання нових зображень
+        lightbox.refresh(); // Оновлюємо SimpleLightbox після додавання нових зображень
     } catch (error) {
         iziToast.error({
             title: 'Error',
             message: 'Failed to load more images.',
         });
         console.error('Error:', error);
+    } finally {
+        hideLoader(); // Приховуємо індикатор завантаження
     }
 });
+
+
+
+
+
+ 
